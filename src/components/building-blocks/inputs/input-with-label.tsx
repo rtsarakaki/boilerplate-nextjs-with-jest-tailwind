@@ -5,15 +5,16 @@ type componentProps = {
   label: string
   placeHolder?: string
   type: string
+  id: string
 }
 
 export default function InputWithLabel(props: componentProps) {
   return (
     <div className="mt-3">
-      <Label htmlFor="inputWithLabel">{props.label}</Label>
+      <Label htmlFor={`${props.id}_input`}>{props.label}</Label>
       <Input
         type={props.type}
-        id="inputWithLabel"
+        id={`${props.id}_input`}
         placeholder={props.placeHolder || props.label}
       />
     </div>
