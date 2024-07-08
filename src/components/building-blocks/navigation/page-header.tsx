@@ -5,7 +5,7 @@ import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import LogoutButton from '../auth/logout-button'
 import If from '../conditional/if'
-import { getServerSession } from 'next-auth'
+import { ThemeToggle } from '../layout/theme-toggle'
 
 export default function PageHeader() {
   const { data: session } = useSession()
@@ -29,6 +29,9 @@ export default function PageHeader() {
             </li>
             <li>
               <LogoutButton />
+            </li>
+            <li>
+              <ThemeToggle />
             </li>
           </ul>
         </nav>

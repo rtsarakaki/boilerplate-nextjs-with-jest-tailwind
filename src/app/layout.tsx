@@ -5,6 +5,7 @@ import { Inter as FontSans } from 'next/font/google'
 import { cn } from '@/lib/utils'
 import PageHeader from '@/components/building-blocks/navigation/page-header'
 import { AuthProvider } from '@/providers/auth.provider'
+import { ThemeProvider } from '@/providers/theme.provider'
 
 const fontSans = FontSans({
   subsets: ['latin'],
@@ -31,8 +32,15 @@ export default async function RootLayout({
             fontSans.variable
           )}
         >
-          <PageHeader />
-          {children}
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <PageHeader />
+            {children}
+          </ThemeProvider>
         </body>
       </html>
     </AuthProvider>
