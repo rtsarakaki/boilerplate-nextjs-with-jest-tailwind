@@ -55,6 +55,10 @@ export default function LoginForm(props: componentProps) {
               setErrorMessageState(errorMessage)
             }}
           />
+          <div className="flex items-center justify-center py-2">
+            <div className="border w-full"></div>
+            <p className="absolute bg-white text-slate-600 px-2">or</p>
+          </div>
           <LoginButton provider="github" callbackUrl="/" />
           <LoginButton provider="google" callbackUrl="/" />
         </div>

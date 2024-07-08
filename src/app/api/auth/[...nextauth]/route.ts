@@ -1,12 +1,17 @@
 import NextAuth from 'next-auth'
 import { NextAuthOptions } from 'next-auth'
 import GitHubProvider from 'next-auth/providers/github'
+import GoogleProvider from 'next-auth/providers/google'
 import CredentialProvider from 'next-auth/providers/credentials'
-import { signIn } from 'next-auth/react'
 
 const gitHubProvider = GitHubProvider({
-  clientId: process.env.GITHUB_ID ?? '',
-  clientSecret: process.env.GITHUB_SECRET ?? ''
+  clientId: process.env.AUTH_GITHUB_ID ?? '',
+  clientSecret: process.env.AUTH_GITHUB_SECRET ?? ''
+})
+
+const googleProvider = GoogleProvider({
+  clientId: process.env.AUTH_GOOGLE_ID ?? '',
+  clientSecret: process.env.AUTH_GOOGLE_SECRET ?? ''
 })
 
 const customCredential = CredentialProvider({
@@ -35,7 +40,7 @@ const customCredential = CredentialProvider({
 })
 
 const authOptions: NextAuthOptions = {
-  providers: [gitHubProvider, customCredential],
+  providers: [gitHubProvider, googleProvider, customCredential],
   callbacks: {
     jwt: ({ token, user }) => {
       const customUser = user as unknown as any
