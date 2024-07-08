@@ -7,9 +7,13 @@ import { FcGoogle } from 'react-icons/fc'
 import { signIn } from 'next-auth/react'
 
 type componentProps = {
+  email?: string
+  password?: string
   text?: string
-  provider: 'github' | 'google' | 'custom'
+  provider: 'github' | 'google' | 'credentials'
   callbackUrl: string
+  onSuccess?: () => void
+  onError?: (errorMessage: string) => void
 }
 
 function getButtonProps(provider: string, text?: string) {
@@ -38,11 +42,36 @@ function getButtonProps(provider: string, text?: string) {
 export default function LoginButton(props: componentProps) {
   const { icon, style, text } = getButtonProps(props.provider, props.text)
 
+  const customSignIn = async () => {
+    const credentials = {
+      redirect: false,
+      email: props.email,
+      password: props.password,
+      callbackUrl: props.callbackUrl
+    }
+
+    try {
+      const response = await signIn(props.provider, credentials)
+      if (!response?.error) {
+        props.onSuccess?.()
+      } else {
+        props.onError?.('Invalid credentials.')
+      }
+    } catch (error) {
+      props.onError?.(JSON.stringify(error))
+    }
+  }
+
+  const handleSignIn = async () => {
+    if (props.provider === 'credentials') {
+      await customSignIn()
+    } else {
+      await signIn(props.provider, { callbackUrl: props.callbackUrl })
+    }
+  }
+
   return (
-    <Button
-      className={`gap-2 ${style}`}
-      onClick={() => signIn(props.provider, { callbackUrl: props.callbackUrl })}
-    >
+    <Button className={`gap-2 ${style}`} onClick={() => handleSignIn()}>
       {icon}
       {text}
     </Button>

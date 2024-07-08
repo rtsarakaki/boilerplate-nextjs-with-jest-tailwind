@@ -3,6 +3,8 @@ import '@/styles/globals.css'
 
 import { Inter as FontSans } from 'next/font/google'
 import { cn } from '@/lib/utils'
+import PageHeader from '@/components/building-blocks/navigation/page-header'
+import { AuthProvider } from '@/providers/auth.provider'
 
 const fontSans = FontSans({
   subsets: ['latin'],
@@ -20,16 +22,19 @@ export default async function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head />
-      <body
-        className={cn(
-          'min-h-screen bg-background font-sans antialiased',
-          fontSans.variable
-        )}
-      >
-        {children}
-      </body>
-    </html>
+    <AuthProvider>
+      <html lang="en" suppressHydrationWarning>
+        <head />
+        <body
+          className={cn(
+            'min-h-screen bg-background font-sans antialiased',
+            fontSans.variable
+          )}
+        >
+          <PageHeader />
+          {children}
+        </body>
+      </html>
+    </AuthProvider>
   )
 }
