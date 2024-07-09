@@ -27,7 +27,7 @@ const customCredential = CredentialProvider({
       password: 'smartsoft',
       name: 'Ricardo T S Arakaki',
       role: 'admin',
-      picture: 'avatar'
+      picture: '/avatar.png'
     }
 
     const emailIsValid = credentials?.email === validUser.email
