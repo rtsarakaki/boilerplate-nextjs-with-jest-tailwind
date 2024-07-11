@@ -1,11 +1,13 @@
 import type { Metadata } from 'next'
 import '@/styles/globals.css'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 import { Inter as FontSans } from 'next/font/google'
 import { cn } from '@/lib/utils'
 import PageHeader from '@/components/building-blocks/navigation/page-header'
 import { AuthProvider } from '@/providers/auth.provider'
 import { ThemeProvider } from '@/providers/theme.provider'
+import QueryProvider from '@/providers/query.provider'
 
 const fontSans = FontSans({
   subsets: ['latin'],
@@ -39,7 +41,10 @@ export default async function RootLayout({
             disableTransitionOnChange
           >
             <PageHeader />
-            {children}
+            <QueryProvider>
+              {children}
+              <ReactQueryDevtools initialIsOpen={false} />
+            </QueryProvider>
           </ThemeProvider>
         </body>
       </html>
